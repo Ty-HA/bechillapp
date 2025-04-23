@@ -1,6 +1,6 @@
 import {transact} from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
 import React, {ComponentProps, useState, useCallback} from 'react';
-import {Button} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
 
 import {useAuthorization} from './providers/AuthorizationProvider';
 import {alertAndLog} from '../util/alertAndLog';
@@ -28,11 +28,23 @@ export default function ConnectButton(props: Props) {
       setAuthorizationInProgress(false);
     }
   }, [authorizationInProgress, authorizeSession]);
+
   return (
-    <Button
-      {...props}
-      disabled={authorizationInProgress}
-      onPress={handleConnectPress}
-    />
+    <View style={styles.buttonContainer}>
+      <Button
+        {...props}
+        disabled={authorizationInProgress}
+        onPress={handleConnectPress}
+        color="#8A2BE2" // Couleur violette pour le bouton
+      />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    borderRadius: 0,
+    padding: 5,
+    overflow: 'hidden', // Assure que le contenu (y compris le bouton) respecte les bords arrondis
+  },
+});

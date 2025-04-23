@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, Text, View, Button} from 'react-native';
 import PrivyConnectScreen from './PrivyConnectScreen';
 
-import {Section} from '../components/Section';
+// import {Section} from '../components/Section';
 import ConnectButton from '../components/ConnectButton';
 import AccountInfo from '../components/AccountInfo';
 import {
@@ -10,8 +10,8 @@ import {
   Account,
 } from '../components/providers/AuthorizationProvider';
 import {useConnection} from '../components/providers/ConnectionProvider';
-import SignMessageButton from '../components/SignMessageButton';
-import SignTransactionButton from '../components/SignTransactionButton';
+// import SignMessageButton from '../components/SignMessageButton';
+// import SignTransactionButton from '../components/SignTransactionButton';
 
 export default function MainScreen() {
   const {connection} = useConnection();
@@ -42,33 +42,52 @@ export default function MainScreen() {
         <PrivyConnectScreen onDone={() => setShowWebView(false)} />
       ) : (
         <>
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {/* Contenu central avec les boutons */}
+          <View style={styles.contentContainer}>
             {selectedAccount ? (
               <>
-                <Section title="Sign a transaction">
-                  <SignTransactionButton />
-                </Section>
+                <View style={styles.accountContainer}>
+                  <AccountInfo
+                    selectedAccount={selectedAccount}
+                    balance={balance}
+                    fetchAndUpdateBalance={fetchAndUpdateBalance}
+                  />
 
-                <Section title="Sign a message">
-                  <SignMessageButton />
-                </Section>
+                  {/* Commenté: Boutons de signature de transaction et message
+                  <View style={styles.buttonsContainer}>
+                    <Section title="Sign a transaction">
+                      <SignTransactionButton />
+                    </Section>
+
+                    <Section title="Sign a message">
+                      <SignMessageButton />
+                    </Section>
+                  </View>
+                  */}
+                </View>
               </>
-            ) : null}
-          </ScrollView>
-          {selectedAccount ? (
-            <AccountInfo
-              selectedAccount={selectedAccount}
-              balance={balance}
-              fetchAndUpdateBalance={fetchAndUpdateBalance}
-            />
-          ) : (
-            <ConnectButton title="Connect wallet" />
-          )}
-          <Button
-            title="Connexion Web avec Privy"
-            onPress={() => setShowWebView(true)}
-          />
-          <Text>Selected cluster: {connection.rpcEndpoint}</Text>
+            ) : (
+              <View style={styles.connectButtonContainer}>
+                <ConnectButton
+                  title="Connect wallet"
+                  color="#8A2BE2" // Violet
+                />
+              </View>
+            )}
+
+            <View style={styles.privyButton}>
+              <Button
+                title="Connexion Web avec Privy"
+                onPress={() => setShowWebView(true)}
+                color="#000000" // Noir
+              />
+            </View>
+          </View>
+
+          {/* Footer avec l'information du cluster */}
+          <View style={styles.footer}>
+            <Text>Selected cluster: {connection.rpcEndpoint}</Text>
+          </View>
         </>
       )}
     </View>
@@ -77,15 +96,45 @@ export default function MainScreen() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: '100%',
-    padding: 0,
     flex: 1,
-  },
-  scrollContainer: {
-    height: '100%',
-  },
-  buttonGroup: {
     flexDirection: 'column',
-    paddingVertical: 4,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  accountContainer: {
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 15,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  connectButtonContainer: {
+    marginVertical: 20,
+    borderRadius: 25,
+    overflow: 'hidden',
+    width: '70%',
+  },
+  buttonsContainer: {
+    width: '100%',
+    marginTop: 20,
+  },
+  privyButton: {
+    marginTop: 20,
+    width: '80%',
+    borderRadius: 25,
+    overflow: 'hidden',
+  },
+  footer: {
+    padding: 16,
+    alignItems: 'center',
   },
 });

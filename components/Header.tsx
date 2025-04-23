@@ -23,8 +23,10 @@ export function Header() {
       ]}
       imageStyle={styles.logo}>
       <View>
-        <Text style={styles.title}>Solana</Text>
-        <Text style={styles.subtitle}>React Native</Text>
+        <Text style={styles.title}>BeChill</Text>
+        <Text style={styles.subtitle}>
+          Build by degens,{'\n'}for degens{'\n'} just Chill
+        </Text>
       </View>
     </ImageBackground>
   );
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: '700',
     textAlign: 'center',
   },
