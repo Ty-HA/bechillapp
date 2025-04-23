@@ -72,7 +72,8 @@ export const APP_IDENTITY = {
 export interface AuthorizationProviderContext {
   accounts: Account[] | null;
   authorizeSession: (wallet: AuthorizeAPI & ReauthorizeAPI) => Promise<Account>;
-  deauthorizeSession: (wallet: DeauthorizeAPI) => void;
+  deauthorizeSession: (wallet: DeauthorizeAPI) => Promise<void>;
+
   onChangeAccount: (nextSelectedAccount: Account) => void;
   selectedAccount: Account | null;
 }
@@ -82,9 +83,10 @@ const AuthorizationContext = React.createContext<AuthorizationProviderContext>({
   authorizeSession: (_wallet: AuthorizeAPI & ReauthorizeAPI) => {
     throw new Error('AuthorizationProvider not initialized');
   },
-  deauthorizeSession: (_wallet: DeauthorizeAPI) => {
+  deauthorizeSession: async (_wallet: DeauthorizeAPI): Promise<void> => {
     throw new Error('AuthorizationProvider not initialized');
   },
+
   onChangeAccount: (_nextSelectedAccount: Account) => {
     throw new Error('AuthorizationProvider not initialized');
   },

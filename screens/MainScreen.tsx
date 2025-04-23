@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Button} from 'react-native';
+import PrivyConnectScreen from './PrivyConnectScreen';
 
 import {Section} from '../components/Section';
 import ConnectButton from '../components/ConnectButton';
@@ -9,8 +10,6 @@ import {
   Account,
 } from '../components/providers/AuthorizationProvider';
 import {useConnection} from '../components/providers/ConnectionProvider';
-import DisconnectButton from '../components/DisconnectButton';
-import RequestAirdropButton from '../components/RequestAirdropButton';
 import SignMessageButton from '../components/SignMessageButton';
 import SignTransactionButton from '../components/SignTransactionButton';
 
@@ -18,6 +17,7 @@ export default function MainScreen() {
   const {connection} = useConnection();
   const {selectedAccount} = useAuthorization();
   const [balance, setBalance] = useState<number | null>(null);
+  const [showWebView, setShowWebView] = useState(false);
 
   const fetchAndUpdateBalance = useCallback(
     async (account: Account) => {
@@ -37,40 +37,48 @@ export default function MainScreen() {
   }, [fetchAndUpdateBalance, selectedAccount]);
 
   return (
-    <>
-      <View style={styles.mainContainer}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {selectedAccount ? (
-            <>
-              <Section title="Sign a transaction">
-                <SignTransactionButton />
-              </Section>
+    <View style={styles.mainContainer}>
+      {showWebView ? (
+        <PrivyConnectScreen onDone={() => setShowWebView(false)} />
+      ) : (
+        <>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            {selectedAccount ? (
+              <>
+                <Section title="Sign a transaction">
+                  <SignTransactionButton />
+                </Section>
 
-              <Section title="Sign a message">
-                <SignMessageButton />
-              </Section>
-            </>
-          ) : null}
-        </ScrollView>
-        {selectedAccount ? (
-          <AccountInfo
-            selectedAccount={selectedAccount}
-            balance={balance}
-            fetchAndUpdateBalance={fetchAndUpdateBalance}
+                <Section title="Sign a message">
+                  <SignMessageButton />
+                </Section>
+              </>
+            ) : null}
+          </ScrollView>
+          {selectedAccount ? (
+            <AccountInfo
+              selectedAccount={selectedAccount}
+              balance={balance}
+              fetchAndUpdateBalance={fetchAndUpdateBalance}
+            />
+          ) : (
+            <ConnectButton title="Connect wallet" />
+          )}
+          <Button
+            title="Connexion Web avec Privy"
+            onPress={() => setShowWebView(true)}
           />
-        ) : (
-          <ConnectButton title="Connect wallet" />
-        )}
-        <Text>Selected cluster: {connection.rpcEndpoint}</Text>
-      </View>
-    </>
+          <Text>Selected cluster: {connection.rpcEndpoint}</Text>
+        </>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
     height: '100%',
-    padding: 16,
+    padding: 0,
     flex: 1,
   },
   scrollContainer: {

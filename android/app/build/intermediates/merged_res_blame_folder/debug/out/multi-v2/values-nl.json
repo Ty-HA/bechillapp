@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.bechillapp-mergeDebugResources-20:/values-nl/values-nl.xml",
+            "outputFile": "com.bechillapp-mergeDebugResources-27:/values-nl/values-nl.xml",
             "map": [
                 {
                     "source": "/Users/tyha/.gradle/caches/transforms-3/08e1174eef2c209ea18090f1084adbcb/transformed/core-1.7.0/res/values-nl/values-nl.xml",

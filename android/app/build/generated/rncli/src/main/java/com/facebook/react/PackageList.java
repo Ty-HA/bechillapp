@@ -17,6 +17,10 @@ import com.solanamobile.mobilewalletadapter.reactnative.SolanaMobileWalletAdapte
 import org.linusu.RNGetRandomValuesPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
+// react-native-screens
+import com.swmansion.rnscreens.RNScreensPackage;
+// react-native-webview
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 
 public class PackageList {
   private Application application;
@@ -64,7 +68,9 @@ public class PackageList {
       new MainReactPackage(mConfig),
       new SolanaMobileWalletAdapterPackage(),
       new RNGetRandomValuesPackage(),
-      new SafeAreaContextPackage()
+      new SafeAreaContextPackage(),
+      new RNScreensPackage(),
+      new RNCWebViewPackage()
     ));
   }
 }
