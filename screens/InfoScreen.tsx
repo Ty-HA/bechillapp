@@ -8,7 +8,6 @@ function InfoScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Solana Mobile</Text>
-      <Text style={styles.subtitle}>BeChill App</Text>
 
       <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>À propos de cette application</Text>
