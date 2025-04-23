@@ -77,7 +77,7 @@ export default function MainScreen() {
 
             <View style={styles.privyButton}>
               <Button
-                title="Connexion Web avec Privy"
+                title="Connect with Privy"
                 onPress={() => setShowWebView(true)}
                 color="#000000" // Noir
               />
@@ -118,18 +118,18 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   connectButtonContainer: {
-    marginVertical: 20,
+    marginVertical: 10,
     borderRadius: 25,
     overflow: 'hidden',
-    width: '70%',
+    width: '50%',
   },
   buttonsContainer: {
     width: '100%',
     marginTop: 20,
   },
   privyButton: {
-    marginTop: 20,
-    width: '80%',
+    marginTop: 4,
+    width: '50%',
     borderRadius: 25,
     overflow: 'hidden',
   },

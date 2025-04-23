@@ -35,7 +35,7 @@ export default function ConnectButton(props: Props) {
         {...props}
         disabled={authorizationInProgress}
         onPress={handleConnectPress}
-        color="#8A2BE2" // Couleur violette pour le bouton
+        color="#8A2BE2"
       />
     </View>
   );
@@ -45,6 +45,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 0,
     padding: 5,
-    overflow: 'hidden', // Assure que le contenu (y compris le bouton) respecte les bords arrondis
+    overflow: 'hidden',
   },
 });
