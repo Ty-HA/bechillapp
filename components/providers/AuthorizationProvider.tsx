@@ -72,7 +72,7 @@ export const APP_IDENTITY = {
 export interface AuthorizationProviderContext {
   accounts: Account[] | null;
   authorizeSession: (wallet: AuthorizeAPI & ReauthorizeAPI) => Promise<Account>;
-  deauthorizeSession: (wallet: DeauthorizeAPI) => Promise<void>;
+  deauthorizeSession: (wallet: DeauthorizeAPI | null) => Promise<void>; // Modifié pour accepter null
 
   onChangeAccount: (nextSelectedAccount: Account) => void;
   selectedAccount: Account | null;
@@ -83,7 +83,8 @@ const AuthorizationContext = React.createContext<AuthorizationProviderContext>({
   authorizeSession: (_wallet: AuthorizeAPI & ReauthorizeAPI) => {
     throw new Error('AuthorizationProvider not initialized');
   },
-  deauthorizeSession: async (_wallet: DeauthorizeAPI): Promise<void> => {
+  deauthorizeSession: async (_wallet: DeauthorizeAPI | null): Promise<void> => {
+    // Modifié pour accepter null
     throw new Error('AuthorizationProvider not initialized');
   },
 
@@ -128,11 +129,24 @@ function AuthorizationProvider(props: {children: ReactNode}) {
     [authorization, handleAuthorizationResult],
   );
   const deauthorizeSession = useCallback(
-    async (wallet: DeauthorizeAPI) => {
+    async (wallet: DeauthorizeAPI | null) => {
+      // Modifié pour accepter null
       if (authorization?.authToken == null) {
         return;
       }
-      await wallet.deauthorize({auth_token: authorization.authToken});
+
+      // Si le wallet est fourni, essayez de désautoriser normalement
+      if (wallet) {
+        try {
+          await wallet.deauthorize({auth_token: authorization.authToken});
+        } catch (error) {
+          console.log(
+            'Error in wallet deauthorize, proceeding with manual cleanup',
+          );
+        }
+      }
+
+      // Dans tous les cas, réinitialiser l'état local
       setAuthorization(null);
     },
     [authorization, setAuthorization],

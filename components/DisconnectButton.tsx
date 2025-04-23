@@ -18,22 +18,35 @@ export default function DisconnectButton(props: Props) {
     try {
       setIsDisconnecting(true);
 
-      // On Android devices, wrap the disconnect in a try/catch
-      await transact(async wallet => {
-        await deauthorizeSession(wallet);
-      });
-
-      console.log('Successfully disconnected');
+      // Sur les appareils physiques, effectuez une déconnexion manuelle
+      if (Platform.OS === 'android' && !__DEV__) {
+        // Forcer la déconnexion en réinitialisant l'état d'autorisation
+        // sans appeler transact qui peut échouer sur les appareils physiques
+        await deauthorizeSession(null);
+        console.log('Manually disconnected (bypassing wallet protocol)');
+      } else {
+        // Sur les émulateurs ou en développement, utiliser transact normalement
+        await transact(async wallet => {
+          await deauthorizeSession(wallet);
+        });
+        console.log('Successfully disconnected via protocol');
+      }
     } catch (error) {
       console.error('Error disconnecting wallet:', error);
 
-      // Montrer une alerte pour les erreurs sur les appareils physiques
-      if (Platform.OS === 'android' && !__DEV__) {
-        Alert.alert(
-          'Disconnect Error',
-          'There was an issue disconnecting your wallet. Please try again.',
-          [{text: 'OK'}],
-        );
+      // Forcer la déconnexion même si l'erreur se produit
+      if (Platform.OS === 'android') {
+        try {
+          await deauthorizeSession(null);
+          console.log('Forced disconnect after error');
+        } catch (secondError) {
+          console.error('Even forced disconnect failed:', secondError);
+          Alert.alert(
+            'Disconnect Error',
+            'Unable to disconnect. Please close and reopen the app.',
+            [{text: 'OK'}],
+          );
+        }
       }
     } finally {
       setIsDisconnecting(false);

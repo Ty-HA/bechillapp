@@ -1,13 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 
 /**
- * Écran d'informations simple
+ * Écran d'informations avec défilement
  */
 function InfoScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.scrollViewContent}>
       <Text style={styles.title}>Solana Mobile</Text>
+      <Text style={styles.subtitle}>BeChill App</Text>
 
       <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>À propos de cette application</Text>
@@ -24,18 +27,37 @@ function InfoScreen() {
           Navigation simple entre les écrans
         </Text>
 
+        <Text style={styles.infoTitle}>Pourquoi Solana?</Text>
+        <Text style={styles.infoText}>
+          Solana offre des transactions rapides et à faible coût, ce qui en fait
+          une plateforme idéale pour les applications décentralisées. Solana
+          Mobile apporte cette technologie directement sur votre appareil
+          Android, permettant une interaction fluide avec la blockchain.
+        </Text>
+
+        <Text style={styles.infoTitle}>Comment utiliser cette app</Text>
+        <Text style={styles.infoText}>
+          1. Connectez-vous avec votre portefeuille Solana{'\n'}
+          2. Consultez votre solde et vos informations{'\n'}
+          3. Explorez les différentes fonctionnalités{'\n'}
+          4. Déconnectez-vous en toute sécurité quand vous avez terminé
+        </Text>
+
         <Text style={styles.version}>Version 0.0.1</Text>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollViewContent: {
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
+    paddingBottom: 80, // Espace supplémentaire en bas pour la BottomBar
   },
   title: {
     fontSize: 28,
