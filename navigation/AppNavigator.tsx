@@ -1,22 +1,47 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {View, Text, StyleSheet} from 'react-native';
 import MainScreen from '../screens/MainScreen';
+import {useAuthorization} from '../components/providers/AuthorizationProvider';
 
-export type RootStackParamList = {
-  Main: undefined;
-  // PrivyConnect: undefined; // 👈 temporairement désactivé
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-export default function AppNavigator() {
+// Simple placeholder screen
+function InfoScreen() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen name="Main" component={MainScreen} />
-        {/* <Stack.Screen name="PrivyConnect" component={PrivyConnectScreen} /> */}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text style={styles.text}>Information Screen</Text>
+    </View>
   );
 }
+
+// Create a stack navigator
+const Stack = createNativeStackNavigator();
+
+// Main navigator component
+function AppNavigator() {
+  const {selectedAccount} = useAuthorization();
+  const isConnected = !!selectedAccount;
+
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      {isConnected ? (
+        <Stack.Screen name="Info" component={InfoScreen} />
+      ) : (
+        <Stack.Screen name="Connect" component={MainScreen} />
+      )}
+    </Stack.Navigator>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
+export default AppNavigator;

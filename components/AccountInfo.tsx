@@ -1,7 +1,6 @@
 import React from 'react';
 import {LAMPORTS_PER_SOL, PublicKey} from '@solana/web3.js';
 import {StyleSheet, View, Text} from 'react-native';
-// import RequestAirdropButton from './RequestAirdropButton';
 import DisconnectButton from './DisconnectButton';
 
 interface Account {
@@ -37,16 +36,17 @@ export default function AccountInfo({
               } SOL`
             : 'Wallet name not found'}
         </Text>
-        <Text style={styles.walletNameSubtitle}>{selectedAccount.address}</Text>
+        <Text style={styles.walletAddressLabel}>Wallet Address:</Text>
+        <Text style={styles.walletAddress}>{selectedAccount.address}</Text>
         <View style={styles.buttonGroup}>
           <DisconnectButton title={'Disconnect'} />
 
           {/* <RequestAirdropButton
-  selectedAccount={selectedAccount}
-  onAirdropComplete={async (account: Account) =>
-    await fetchAndUpdateBalance(account)
-  }
-/> */}
+            selectedAccount={selectedAccount}
+            onAirdropComplete={async (account: Account) =>
+              await fetchAndUpdateBalance(account)
+            }
+          /> */}
         </View>
       </View>
     </View>
@@ -55,28 +55,45 @@ export default function AccountInfo({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    padding: 24,
+    padding: 16,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    width: '100%',
   },
   textContainer: {
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   buttonGroup: {
     flexDirection: 'row',
     columnGap: 10,
+    marginTop: 20,
   },
   walletHeader: {
     fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    color: '#333',
   },
   walletBalance: {
-    fontSize: 20,
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 15,
+    color: '#8A2BE2',
   },
-  walletNameSubtitle: {
-    fontSize: 12,
+  walletAddressLabel: {
+    fontSize: 14,
+    fontWeight: 'bold',
     marginBottom: 5,
+    color: '#333',
+  },
+  walletAddress: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+    paddingHorizontal: 10,
+    width: '100%',
   },
 });

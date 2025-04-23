@@ -1,8 +1,11 @@
+// Vérifiez que le fichier MainScreen.js exporte correctement le composant
+// Assurez-vous que la dernière ligne est:
+// export default MainScreen;
+
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import PrivyConnectScreen from './PrivyConnectScreen';
 
-// import {Section} from '../components/Section';
 import ConnectButton from '../components/ConnectButton';
 import AccountInfo from '../components/AccountInfo';
 import {
@@ -10,17 +13,16 @@ import {
   Account,
 } from '../components/providers/AuthorizationProvider';
 import {useConnection} from '../components/providers/ConnectionProvider';
-// import SignMessageButton from '../components/SignMessageButton';
-// import SignTransactionButton from '../components/SignTransactionButton';
 
-export default function MainScreen() {
+// Définition avec function plutôt que const arrow function
+function MainScreen() {
   const {connection} = useConnection();
   const {selectedAccount} = useAuthorization();
-  const [balance, setBalance] = useState<number | null>(null);
+  const [balance, setBalance] = useState(null);
   const [showWebView, setShowWebView] = useState(false);
 
   const fetchAndUpdateBalance = useCallback(
-    async (account: Account) => {
+    async account => {
       console.log('Fetching balance for: ' + account.publicKey);
       const fetchedBalance = await connection.getBalance(account.publicKey);
       console.log('Balance fetched: ' + fetchedBalance);
@@ -36,60 +38,43 @@ export default function MainScreen() {
     fetchAndUpdateBalance(selectedAccount);
   }, [fetchAndUpdateBalance, selectedAccount]);
 
+  if (showWebView) {
+    return <PrivyConnectScreen onDone={() => setShowWebView(false)} />;
+  }
+
   return (
     <View style={styles.mainContainer}>
-      {showWebView ? (
-        <PrivyConnectScreen onDone={() => setShowWebView(false)} />
-      ) : (
-        <>
-          {/* Contenu central avec les boutons */}
-          <View style={styles.contentContainer}>
-            {selectedAccount ? (
-              <>
-                <View style={styles.accountContainer}>
-                  <AccountInfo
-                    selectedAccount={selectedAccount}
-                    balance={balance}
-                    fetchAndUpdateBalance={fetchAndUpdateBalance}
-                  />
-
-                  {/* Commenté: Boutons de signature de transaction et message
-                  <View style={styles.buttonsContainer}>
-                    <Section title="Sign a transaction">
-                      <SignTransactionButton />
-                    </Section>
-
-                    <Section title="Sign a message">
-                      <SignMessageButton />
-                    </Section>
-                  </View>
-                  */}
-                </View>
-              </>
-            ) : (
-              <View style={styles.connectButtonContainer}>
-                <ConnectButton
-                  title="Connect wallet"
-                  color="#8A2BE2" // Violet
-                />
-              </View>
-            )}
+      <View style={styles.contentContainer}>
+        {selectedAccount ? (
+          <View style={styles.accountContainer}>
+            <AccountInfo
+              selectedAccount={selectedAccount}
+              balance={balance}
+              fetchAndUpdateBalance={fetchAndUpdateBalance}
+            />
+          </View>
+        ) : (
+          <View style={styles.connectContainer}>
+            <View style={styles.connectButtonContainer}>
+              <ConnectButton title="Connect wallet" color="#8A2BE2" />
+            </View>
 
             <View style={styles.privyButton}>
               <Button
                 title="Connect with Privy"
                 onPress={() => setShowWebView(true)}
-                color="#000000" // Noir
+                color="#000000"
               />
             </View>
           </View>
+        )}
+      </View>
 
-          {/* Footer avec l'information du cluster */}
-          <View style={styles.footer}>
-            <Text>Selected cluster: {connection.rpcEndpoint}</Text>
-          </View>
-        </>
-      )}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          Selected cluster: {connection.rpcEndpoint}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -105,8 +90,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
-  accountContainer: {
+  connectContainer: {
     width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  accountContainer: {
+    width: '90%',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
     borderRadius: 15,
@@ -121,15 +111,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 25,
     overflow: 'hidden',
-    width: '50%',
-  },
-  buttonsContainer: {
-    width: '100%',
-    marginTop: 20,
+    width: '70%',
   },
   privyButton: {
-    marginTop: 4,
-    width: '50%',
+    marginTop: 15,
+    width: '70%',
     borderRadius: 25,
     overflow: 'hidden',
   },
@@ -137,4 +123,11 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
   },
+  footerText: {
+    fontSize: 12,
+    color: '#666',
+  },
 });
+
+// Assurez-vous que cette ligne est présente
+export default MainScreen;
