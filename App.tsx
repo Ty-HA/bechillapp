@@ -6,7 +6,7 @@ import {clusterApiUrl} from '@solana/web3.js';
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
 import {AuthorizationProvider} from './src/components/providers/AuthorizationProvider';
-import {Header} from './src/components/Header';
+// import {Header} from './src/components/Header';
 import MainScreen from './src/screens/MainScreen';
 import InfoScreen from './src/screens/InfoScreen';
 import BottomBar from './src/components/BottomBar';
@@ -120,7 +120,6 @@ export default function App() {
       endpoint={clusterApiUrl(RPC_ENDPOINT)}>
       <AuthorizationProvider>
         <SafeAreaView style={styles.shell}>
-          <Header />
           <NavigationContent />
         </SafeAreaView>
       </AuthorizationProvider>

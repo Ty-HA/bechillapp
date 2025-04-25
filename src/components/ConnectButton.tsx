@@ -4,7 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {useAuthorization} from './providers/AuthorizationProvider';
 import {alertAndLog} from '../../src/utils/alertAndLog';
-import {Colors, Fonts} from '../constants/GlobalStyles'; // (import tes couleurs + fonts)
+import {Colors, Fonts} from '../constants/GlobalStyles';
 
 type Props = {
   title: string;

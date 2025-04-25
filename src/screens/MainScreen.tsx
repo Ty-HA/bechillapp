@@ -3,16 +3,28 @@
 // export default MainScreen;
 
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {
+  ImageBackground,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+} from 'react-native';
+
 import PrivyConnectScreen from './PrivyConnectScreen';
 
-import ConnectButton from '../components/ConnectButton';
+import ConnectButton from '../../src/components/ConnectButton';
 import AccountInfo from '../../src/components/AccountInfo';
 import {
   useAuthorization,
   Account,
 } from '../components/providers/AuthorizationProvider';
 import {useConnection} from '../components/providers/ConnectionProvider';
+import {Colors, Fonts} from '../constants/GlobalStyles';
+
+const background = require('../../assets/img/BeChill_landing_bg.png');
+const logo = require('../../assets/img/bechill-head1.png');
 
 // Définition avec function plutôt que const arrow function
 function MainScreen() {
@@ -43,7 +55,10 @@ function MainScreen() {
   }
 
   return (
-    <View style={styles.mainContainer}>
+    <ImageBackground
+      source={background}
+      style={styles.mainContainer}
+      resizeMode="cover">
       <View style={styles.contentContainer}>
         {selectedAccount ? (
           <View style={styles.accountContainer}>
@@ -55,8 +70,14 @@ function MainScreen() {
           </View>
         ) : (
           <View style={styles.connectContainer}>
+            <Image source={logo} style={styles.logo} resizeMode="contain" />
+
+            <Text style={styles.subTitle}>
+              Chill{'\n'}your personal asset manager powered by Solana
+            </Text>
+
             <View style={styles.connectButtonContainer}>
-              <ConnectButton title="Connect wallet" color="#8A2BE2" />
+              <ConnectButton title="Connect wallet" />
             </View>
 
             <View style={styles.privyButton}>
@@ -75,7 +96,7 @@ function MainScreen() {
           Selected cluster: {connection.rpcEndpoint}
         </Text>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -94,6 +115,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logo: {
+    width: '100%', // Garde le logo responsive en largeur
+    height: 130, // Augmente la hauteur (était 100)
+    maxWidth: 300, // Ajoute une largeur maximale pour contrôler la taille
+    marginBottom: 24,
+    alignSelf: 'center',
   },
   accountContainer: {
     width: '90%',
@@ -127,7 +155,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
   },
+  subTitle: {
+    fontFamily: Fonts.DMSerif,
+    fontSize: 46,
+    textAlign: 'center',
+    color: Colors.primary,
+    marginBottom: 24,
+    paddingHorizontal: 12,
+    lineHeight: 48,
+  },
 });
 
-// Assurez-vous que cette ligne est présente
 export default MainScreen;
