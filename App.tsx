@@ -1,16 +1,16 @@
 import {
   ConnectionProvider,
   RPC_ENDPOINT,
-} from './components/providers/ConnectionProvider';
+} from './src/components/providers/ConnectionProvider';
 import {clusterApiUrl} from '@solana/web3.js';
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
-import {AuthorizationProvider} from './components/providers/AuthorizationProvider';
-import {Header} from './components/Header';
-import MainScreen from './screens/MainScreen';
-import InfoScreen from './screens/InfoScreen';
-import BottomBar from './components/BottomBar';
-import {useAuthorization} from './components/providers/AuthorizationProvider';
+import {AuthorizationProvider} from './src/components/providers/AuthorizationProvider';
+import {Header} from './src/components/Header';
+import MainScreen from './src/screens/MainScreen';
+import InfoScreen from './src/screens/InfoScreen';
+import BottomBar from './src/components/BottomBar';
+import {useAuthorization} from './src/components/providers/AuthorizationProvider';
 
 // Composants de placeholder pour les nouveaux écrans
 const ProfileScreen = () => (

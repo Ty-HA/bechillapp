@@ -14,7 +14,7 @@ export function Header() {
     <ImageBackground
       accessibilityRole="image"
       testID="new-app-screen-header"
-      source={require('../img/background.png')}
+      source={require('../../assets/img/background.png')}
       style={[
         styles.background,
         {
@@ -45,13 +45,16 @@ const styles = StyleSheet.create({
   subtitle: {
     color: '#333',
     fontSize: 24,
-    fontWeight: '500',
     textAlign: 'center',
+    fontFamily: 'PP Monument Extended',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
   },
   title: {
     color: '#fff',
     fontSize: 50,
-    fontWeight: '700',
+    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'PP Monument Extended',
   },
 });
