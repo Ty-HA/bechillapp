@@ -7,7 +7,7 @@ import {StyleSheet, Text, View, Button} from 'react-native';
 import PrivyConnectScreen from './PrivyConnectScreen';
 
 import ConnectButton from '../components/ConnectButton';
-import AccountInfo from '../components/AccountInfo';
+import AccountInfo from '../../src/components/AccountInfo';
 import {
   useAuthorization,
   Account,

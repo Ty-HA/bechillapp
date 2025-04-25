@@ -6,7 +6,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {Colors} from './Colors';
+import {Colors} from '../constants/GlobalStyles';
 
 export function Header() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -18,7 +18,9 @@ export function Header() {
       style={[
         styles.background,
         {
-          backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+          backgroundColor: isDarkMode
+            ? Colors.textPrimary
+            : Colors.textSecondary,
         },
       ]}
       imageStyle={styles.logo}>

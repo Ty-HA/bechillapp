@@ -9,7 +9,7 @@ import {Keypair, SystemProgram, Transaction} from '@solana/web3.js';
 
 import {useAuthorization} from './providers/AuthorizationProvider';
 import {useConnection} from './providers/ConnectionProvider';
-import {alertAndLog} from '../../utils/alertAndLog';
+import {alertAndLog} from '../../src/utils/alertAndLog';
 
 export default function SignTransactionButton() {
   const {connection} = useConnection();

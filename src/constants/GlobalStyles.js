@@ -3,9 +3,10 @@
 import {StyleSheet} from 'react-native';
 
 export const Colors = {
-  primary: '#5A31F4', // Violet chill principal
-  secondary: '#FFD700', // Jaune doré
-  background: '#FFFFFF',
+  primary: '#540CCC', // Nouveau violet chill principal
+  secondary: '#FFFF4F', // Nouveau jaune éclatant
+  backgroundStart: '#A0C5E8', // Dégradé start
+  backgroundEnd: '#FAEAB0', // Dégradé end
   textPrimary: '#333333',
   textSecondary: '#666666',
   success: '#4CAF50',
@@ -13,13 +14,13 @@ export const Colors = {
 };
 
 export const Fonts = {
-  Monument: 'PP Monument Extended', // Unique font family pour toutes les variantes
+  Monument: 'PP Monument Extended',
+  DMSerif: 'DM Serif Text',
 };
 
 export const GlobalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
     padding: 16,
   },
   title: {
@@ -37,9 +38,15 @@ export const GlobalStyles = StyleSheet.create({
     textAlign: 'center',
   },
   bodyText: {
-    fontFamily: Fonts.Monument,
+    fontFamily: Fonts.DMSerif,
     fontSize: 16,
     color: Colors.textPrimary,
+  },
+  bodyTextItalic: {
+    fontFamily: Fonts.DMSerif,
+    fontSize: 16,
+    color: Colors.textPrimary,
+    fontStyle: 'italic',
   },
   buttonPrimary: {
     backgroundColor: Colors.primary,
@@ -51,7 +58,7 @@ export const GlobalStyles = StyleSheet.create({
   buttonPrimaryText: {
     fontFamily: Fonts.Monument,
     fontSize: 18,
-    color: Colors.background,
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
 });

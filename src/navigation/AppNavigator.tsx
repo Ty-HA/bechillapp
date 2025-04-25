@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {View, Text, StyleSheet} from 'react-native';
 import MainScreen from '../screens/MainScreen';
-import {useAuthorization} from '../components/providers/AuthorizationProvider';
+import {useAuthorization} from '../../src/components/providers/AuthorizationProvider';
 
 // Simple placeholder screen
 function InfoScreen() {

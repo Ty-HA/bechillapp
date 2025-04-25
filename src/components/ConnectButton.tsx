@@ -1,15 +1,19 @@
 import {transact} from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
-import React, {ComponentProps, useState, useCallback} from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {useAuthorization} from './providers/AuthorizationProvider';
-import {alertAndLog} from '../../utils/alertAndLog';
+import {alertAndLog} from '../../src/utils/alertAndLog';
+import {Colors, Fonts} from '../constants/GlobalStyles'; // (import tes couleurs + fonts)
 
-type Props = Readonly<ComponentProps<typeof Button>>;
+type Props = {
+  title: string;
+};
 
-export default function ConnectButton(props: Props) {
+export default function ConnectButton({title}: Props) {
   const {authorizeSession} = useAuthorization();
   const [authorizationInProgress, setAuthorizationInProgress] = useState(false);
+
   const handleConnectPress = useCallback(async () => {
     try {
       if (authorizationInProgress) {
@@ -31,20 +35,34 @@ export default function ConnectButton(props: Props) {
 
   return (
     <View style={styles.buttonContainer}>
-      <Button
-        {...props}
-        disabled={authorizationInProgress}
+      <TouchableOpacity
+        style={styles.button}
         onPress={handleConnectPress}
-        color="#8A2BE2"
-      />
+        disabled={authorizationInProgress}>
+        <Text style={styles.buttonText}>
+          {authorizationInProgress ? 'Loading...' : title}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    borderRadius: 0,
-    padding: 5,
+    borderRadius: 25,
     overflow: 'hidden',
+  },
+  button: {
+    backgroundColor: Colors.primary, // violet #540CCC
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: Colors.secondary, // jaune #FFFF4F
+    fontFamily: Fonts.Monument,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

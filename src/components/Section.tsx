@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, Text, useColorScheme, View} from 'react-native';
-import {Colors} from './Colors';
+import {Colors} from '../constants/GlobalStyles';
 
 export const Section: React.FC<{
   children?: ReactNode;
@@ -8,7 +8,10 @@ export const Section: React.FC<{
   title?: string;
 }> = ({children, description, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const textColor = {color: isDarkMode ? Colors.lighter : Colors.darker};
+  const textColor = {
+    color: isDarkMode ? Colors.textSecondary : Colors.textPrimary,
+  };
+
   return (
     <View style={styles.sectionContainer}>
       {title ? (
