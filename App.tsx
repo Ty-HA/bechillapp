@@ -6,9 +6,10 @@ import {clusterApiUrl} from '@solana/web3.js';
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
 import {AuthorizationProvider} from './src/components/providers/AuthorizationProvider';
-// import {Header} from './src/components/Header';
 import MainScreen from './src/screens/MainScreen';
 import InfoScreen from './src/screens/InfoScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
+import WalletStoryScreen from './src/screens/WalletStoryScreen';
 import BottomBar from './src/components/BottomBar';
 import {useAuthorization} from './src/components/providers/AuthorizationProvider';
 
@@ -73,10 +74,45 @@ const NavigationContent = () => {
   const {selectedAccount} = useAuthorization();
   const isConnected = !!selectedAccount;
 
+  // État pour gérer le flux d'onboarding
+  const [isFirstTime, setIsFirstTime] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(true);
+  const [showWalletStory, setShowWalletStory] = useState(false);
+
   // Réinitialiser à l'écran wallet quand l'utilisateur se connecte/déconnecte
   useEffect(() => {
     setActiveScreen('wallet');
+
+    // Si l'utilisateur se connecte, on considère que l'onboarding est terminé
+    if (isConnected) {
+      setShowOnboarding(false);
+      setShowWalletStory(false);
+    }
   }, [isConnected]);
+
+  // Fonction pour naviguer entre les écrans d'onboarding
+  const navigateOnboarding = screen => {
+    if (screen === 'wallet_story') {
+      setShowOnboarding(false);
+      setShowWalletStory(true);
+    } else if (screen === 'main') {
+      setShowOnboarding(false);
+      setShowWalletStory(false);
+      setIsFirstTime(false);
+    }
+  };
+
+  // Si c'est la première fois et que l'utilisateur n'est pas connecté, afficher l'onboarding
+  if (isFirstTime && !isConnected) {
+    if (showOnboarding) {
+      return <OnboardingScreen onNavigate={navigateOnboarding} />;
+    }
+    if (showWalletStory) {
+      return (
+        <WalletStoryScreen onComplete={() => navigateOnboarding('main')} />
+      );
+    }
+  }
 
   // Si non connecté, afficher uniquement l'écran de connexion
   if (!isConnected) {
