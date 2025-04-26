@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {Colors, Fonts} from '../constants/GlobalStyles';
+import {Colors, Fonts, GlobalStyles} from '../constants/GlobalStyles';
 import {useAuthorization} from '../components/providers/AuthorizationProvider';
 
 // Types pour nos messages
@@ -133,6 +133,7 @@ const OnboardingScreen = ({onNavigate}: OnboardingScreenProps) => {
     }
     // Si c'est la seconde réponse (question sur le wallet)
     else if (onboardingStep === 1) {
+      // Pour toutes les questions, simplifier la réponse et passer directement à la wallet review
       // Simuler la saisie du bot
       const typingId = simulateBotTyping();
 
@@ -140,18 +141,19 @@ const OnboardingScreen = ({onNavigate}: OnboardingScreenProps) => {
       setTimeout(() => {
         setMessages(prev => prev.filter(msg => msg.id !== typingId));
 
+        // Message simplifié
         addMessage({
           id: Date.now().toString(),
-          text: "That's a good question, let me breakdown the performance of your wallet in the last month",
+          text: "Let's take a look at your wallet performance...",
           sender: 'bot',
           timestamp: new Date(),
         });
 
-        // Afficher le composant de wallet review
+        // Afficher directement le composant de wallet review
         setTimeout(() => {
           setShowWalletReview(true);
-        }, 1000);
-      }, 1500);
+        }, 800);
+      }, 1000);
     }
   };
 
@@ -175,17 +177,27 @@ const OnboardingScreen = ({onNavigate}: OnboardingScreenProps) => {
           resizeMode="contain"
         />
         <Text style={styles.logoText}>beChill</Text>
+
+        {/* Bouton skip dans l'en-tête */}
+        <TouchableOpacity
+          style={styles.headerSkipButton}
+          onPress={skipToConnect}>
+          <Text style={styles.headerSkipText}>Skip →</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Zone de chat */}
       <KeyboardAvoidingView
         style={styles.chatContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={100}>
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
         <ScrollView
           ref={scrollViewRef}
           style={styles.messagesContainer}
-          contentContainerStyle={styles.messagesContent}>
+          contentContainerStyle={[
+            styles.messagesContent,
+            {flexGrow: 1, justifyContent: 'flex-end'},
+          ]}>
           {messages.map(message => (
             <View
               key={message.id}
@@ -195,7 +207,15 @@ const OnboardingScreen = ({onNavigate}: OnboardingScreenProps) => {
                   ? styles.userBubble
                   : styles.botBubble,
               ]}>
-              <Text style={styles.messageText}>{message.text}</Text>
+              <Text
+                style={[
+                  styles.messageText,
+                  Platform.OS === 'android'
+                    ? {color: Colors.textPrimary}
+                    : null,
+                ]}>
+                {message.text}
+              </Text>
               <Text style={styles.timestamp}>
                 {message.timestamp.toLocaleTimeString([], {
                   hour: '2-digit',
@@ -220,7 +240,6 @@ const OnboardingScreen = ({onNavigate}: OnboardingScreenProps) => {
           )}
         </ScrollView>
 
-        {/* Zone de saisie du message */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -238,11 +257,6 @@ const OnboardingScreen = ({onNavigate}: OnboardingScreenProps) => {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-
-      {/* Bouton de skip (visible uniquement pour debug/test) */}
-      <TouchableOpacity style={styles.skipButton} onPress={skipToConnect}>
-        <Text style={styles.skipButtonText}>Skip to Connect</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -256,6 +270,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
+    justifyContent: 'space-between', // Espacement entre les éléments
   },
   logo: {
     width: 40,
@@ -266,9 +281,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: Colors.primary,
     marginLeft: 10,
+    flex: 1, // Prend l'espace disponible pour centrer le logo et le texte
+  },
+  headerSkipButton: {
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+  headerSkipText: {
+    color: Colors.primary,
+    fontSize: 14,
+    fontFamily: Fonts.Monument,
   },
   chatContainer: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
   },
   messagesContainer: {
     flex: 1,
@@ -276,6 +305,8 @@ const styles = StyleSheet.create({
   },
   messagesContent: {
     paddingBottom: 20,
+    flexGrow: 1,
+    justifyContent: Platform.OS === 'android' ? 'flex-end' : 'flex-start',
   },
   messageBubble: {
     borderRadius: 20,
@@ -295,17 +326,24 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 16,
-    color: '#333',
+    fontFamily: Fonts.DMSerif, // Utiliser vos polices globales
+    color: Colors.textPrimary, // Utiliser la couleur de texte de vos styles globaux (#333333)
   },
   timestamp: {
     fontSize: 12,
-    color: '#999',
+    fontFamily: Platform.OS === 'android' ? Fonts.DMSerif : undefined,
+    color: Colors.textSecondary, // Utiliser la couleur secondaire de vos styles globaux (#666666)
     alignSelf: 'flex-end',
     marginTop: 5,
   },
   inputContainer: {
     flexDirection: 'row',
     padding: 15,
+    backgroundColor: 'rgba(255,255,255,0.5)', // Fond légèrement transparent
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0,0,0,0.05)',
+    position: 'relative',
+    bottom: 0,
   },
   input: {
     flex: 1,
@@ -314,6 +352,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     fontSize: 16,
+    fontFamily: Fonts.DMSerif, // Utiliser votre police globale
+    color: Colors.textPrimary, // Définir explicitement la couleur du texte
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   sendButton: {
     backgroundColor: Colors.secondary,
@@ -323,6 +368,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,
+    elevation: 2, // Ombre pour Android
+    shadowColor: '#000', // Ombre pour iOS
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   sendButtonText: {
     color: '#333',
@@ -341,8 +391,8 @@ const styles = StyleSheet.create({
   },
   walletReviewTitle: {
     color: 'white',
-    fontFamily: Fonts.Monument,
-    fontSize: 22,
+    fontFamily: Fonts.DMSerif,
+    fontSize: 40,
     marginBottom: 15,
   },
   viewStoryButton: {
@@ -352,22 +402,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   viewStoryText: {
-    color: 'white',
+    color: Colors.secondary,
     fontFamily: Fonts.Monument,
     fontSize: 14,
-  },
-  skipButton: {
-    position: 'absolute',
-    bottom: 80,
-    right: 20,
-    backgroundColor: 'rgba(0,0,0,0.1)',
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-  },
-  skipButtonText: {
-    color: '#333',
-    fontSize: 12,
   },
 });
 

@@ -74,21 +74,27 @@ const NavigationContent = () => {
   const {selectedAccount} = useAuthorization();
   const isConnected = !!selectedAccount;
 
-  // État pour gérer le flux d'onboarding
+  // États pour gérer le flux d'onboarding
   const [isFirstTime, setIsFirstTime] = useState(true);
-  const [showOnboarding, setShowOnboarding] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false); // Modifié pour commencer par le MainScreen
   const [showWalletStory, setShowWalletStory] = useState(false);
+  const [hasCompletedWalletConnect, setHasCompletedWalletConnect] =
+    useState(false);
 
   // Réinitialiser à l'écran wallet quand l'utilisateur se connecte/déconnecte
   useEffect(() => {
     setActiveScreen('wallet');
 
-    // Si l'utilisateur se connecte, on considère que l'onboarding est terminé
-    if (isConnected) {
-      setShowOnboarding(false);
-      setShowWalletStory(false);
+    // Si l'utilisateur se connecte, marquer qu'il a complété la connexion du wallet
+    if (isConnected && isFirstTime) {
+      setHasCompletedWalletConnect(true);
+
+      // Si c'est la première fois, montrer l'écran d'onboarding après la connexion
+      if (!showOnboarding && !showWalletStory) {
+        setShowOnboarding(true);
+      }
     }
-  }, [isConnected]);
+  }, [isConnected, isFirstTime]);
 
   // Fonction pour naviguer entre les écrans d'onboarding
   const navigateOnboarding = screen => {
@@ -102,8 +108,8 @@ const NavigationContent = () => {
     }
   };
 
-  // Si c'est la première fois et que l'utilisateur n'est pas connecté, afficher l'onboarding
-  if (isFirstTime && !isConnected) {
+  // Si l'utilisateur est connecté et que c'est sa première fois (et qu'il a déjà connecté son wallet)
+  if (isConnected && isFirstTime && hasCompletedWalletConnect) {
     if (showOnboarding) {
       return <OnboardingScreen onNavigate={navigateOnboarding} />;
     }
@@ -114,7 +120,7 @@ const NavigationContent = () => {
     }
   }
 
-  // Si non connecté, afficher uniquement l'écran de connexion
+  // Si non connecté ou si c'est la première interaction
   if (!isConnected) {
     return <MainScreen />;
   }
