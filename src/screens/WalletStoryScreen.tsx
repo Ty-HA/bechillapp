@@ -24,7 +24,7 @@ interface StoryPage {
 
 // Props pour l'écran WalletStory
 interface WalletStoryScreenProps {
-  onComplete: () => void;
+  onComplete?: () => void;
 }
 
 const WalletStoryScreen = ({onComplete}: WalletStoryScreenProps) => {

@@ -24,8 +24,9 @@ interface Message {
 }
 
 // Props pour l'écran d'onboarding
+// Dans OnboardingScreen.tsx
 interface OnboardingScreenProps {
-  onNavigate: (screen: string) => void;
+  onNavigate?: () => void; // Rendre cette prop optionnelle avec le "?"
 }
 
 // Composant pour l'écran d'onboarding
