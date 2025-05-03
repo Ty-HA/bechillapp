@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Header from '../components/Header';
+import {Colors, Fonts} from '../constants/GlobalStyles';
 
 // Données fictives pour les objectifs
 const mockObjectives = [
@@ -119,8 +120,9 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#8A2BE2',
+    fontWeight: '600',
+    color: Colors.primary,
+    fontFamily: Fonts.DMSerif,
     paddingHorizontal: 15,
     paddingVertical: 10,
   },

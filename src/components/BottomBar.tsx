@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
+import {Colors} from '../constants/GlobalStyles';
 
 /**
  * Barre de navigation complète pour l'app BeChill
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   activeIcon: {
-    tintColor: '#8A2BE2', // Couleur violette pour l'icône active
+    tintColor: Colors.primary, // Couleur violette pour l'icône active
   },
   inactiveIcon: {
     tintColor: '#bbbbbb', // Couleur grise pour les icônes inactives
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   activeText: {
-    color: '#8A2BE2', // Couleur violette pour le texte actif
+    color: Colors.primary,
     fontWeight: 'bold',
   },
   inactiveText: {

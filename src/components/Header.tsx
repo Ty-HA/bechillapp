@@ -1,6 +1,7 @@
 // Components/Header.tsx
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
+import {Colors} from '../constants/GlobalStyles';
 
 const Header = () => {
   return (
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   logoText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#8A2BE2',
+    color: Colors.primary,
     marginLeft: 10,
   },
 });
