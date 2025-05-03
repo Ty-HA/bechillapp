@@ -64,6 +64,27 @@ const NavigationContent = () => {
       setCurrentView('walletStory');
     } else if (screen === 'main') {
       setCurrentView('dashboard');
+    } else if (screen === 'assets') {
+      // Ajouter ce cas pour la redirection après les stories
+      setCurrentView('dashboard');
+      setActiveScreen('assets');
+    }
+  };
+
+  // Fonction pour gérer la complétion de WalletStoryScreen
+  const handleWalletStoryComplete = (destination?: string) => {
+    console.log(
+      'handleWalletStoryComplete called with destination:',
+      destination,
+    );
+
+    if (destination === 'assets') {
+      // Si l'utilisateur a demandé à aller sur assets, le rediriger correctement
+      setCurrentView('dashboard');
+      setActiveScreen('assets');
+    } else {
+      // Comportement par défaut pour la compatibilité
+      navigateOnboarding('main');
     }
   };
 
@@ -75,7 +96,7 @@ const NavigationContent = () => {
 
   if (currentView === 'walletStory') {
     console.log('Rendering WalletStoryScreen');
-    return <WalletStoryScreen onComplete={() => navigateOnboarding('main')} />;
+    return <WalletStoryScreen onComplete={handleWalletStoryComplete} />;
   }
 
   if (!isConnected) {

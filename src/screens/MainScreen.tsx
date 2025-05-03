@@ -179,14 +179,14 @@ const styles = StyleSheet.create({
   getStartedButton: {
     marginTop: 4,
     width: '70%',
-    backgroundColor: '#8A2BE2', // Couleur violette pour le différencier
+    backgroundColor: Colors.secondary,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 25,
     alignItems: 'center',
   },
   getStartedButtonText: {
-    color: 'white',
+    color: Colors.primary,
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: Fonts.DMSerif,
