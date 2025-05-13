@@ -28,7 +28,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
     },
     */
     {
-      id: 'chat',
+      id: 'onboarding',
       iconName: 'sms',
       activeIconName: 'sms',
       label: 'Chat',
@@ -40,7 +40,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
       label: 'ChillSpace',
     },
     {
-      id: 'profile',
+      id: 'settings',
       iconName: 'settings',
       activeIconName: 'settings',
       label: 'Settings',

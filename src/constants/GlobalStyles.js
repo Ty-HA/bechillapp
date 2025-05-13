@@ -51,7 +51,7 @@ export const GlobalStyles = StyleSheet.create({
     color: Colors.textPrimary,
   },
   titleItalic: {
-    fontFamily: Fonts.MonumentItalic, // Nouvelle variante italique pour les titres
+    fontFamily: Fonts.MonumentItalic,
     fontSize: 28,
     color: Colors.textPrimary,
   },

@@ -11,102 +11,22 @@ import {
 import {PublicKey} from '@solana/web3.js';
 
 import PrivyConnectScreen from './PrivyConnectScreen';
-import AnimatedClouds from '../components/ui/AnimatedClouds';
-import Header from '../components/Header';
+import AnimatedCloudsLight from '../components/ui/AnimatedCloudsLight';
 import ConnectButton from '../components/ConnectButton';
 import AccountInfo from '../components/AccountInfo';
 import {useAuthorization} from '../components/providers/AuthorizationProvider';
 import {useConnection} from '../components/providers/ConnectionProvider';
 import {Colors, Fonts} from '../constants/GlobalStyles';
-
-// Composant pour une barre de progression
-interface ProgressBarProps {
-  progress: number;
-  color: string;
-  backgroundColor?: string;
-}
-
-const ProgressBar: React.FC<ProgressBarProps> = ({
-  progress,
-  color,
-  backgroundColor = '#E0E0FF',
-}) => (
-  <View style={[styles.progressBarContainer, {backgroundColor}]}>
-    <View
-      style={[
-        styles.progressBar,
-        {width: `${progress}%`, backgroundColor: color},
-      ]}
-    />
-  </View>
-);
-
-// Composant pour une carte d'information
-interface InfoCardProps {
-  icon: string;
-  title: string;
-  progress: number;
-  color: string;
-  value: string;
-  additionalInfo?: {
-    leftText?: string;
-    rightText?: string;
-  };
-  showInfoButton?: boolean;
-}
-
-const InfoCard: React.FC<InfoCardProps> = ({
-  icon,
-  title,
-  progress,
-  color,
-  value,
-  additionalInfo,
-  showInfoButton = true,
-}) => (
-  <View style={styles.infoCard}>
-    <View style={styles.cardHeader}>
-      <View style={styles.cardTitleContainer}>
-        <Text style={styles.cardIcon}>{icon}</Text>
-        <Text style={styles.cardTitle}>{title}</Text>
-      </View>
-      {showInfoButton && (
-        <TouchableOpacity style={styles.infoButton}>
-          <Text style={styles.infoButtonText}>ⓘ</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-
-    <ProgressBar progress={progress} color={color} />
-
-    <View style={styles.valueContainer}>
-      <Text style={styles.valueText}>{value}</Text>
-    </View>
-
-    {additionalInfo && (
-      <View style={styles.additionalInfoContainer}>
-        {additionalInfo.leftText && (
-          <Text style={styles.additionalInfoText}>
-            {additionalInfo.leftText}
-          </Text>
-        )}
-        {additionalInfo.rightText && (
-          <Text style={styles.additionalInfoText}>
-            {additionalInfo.rightText}
-          </Text>
-        )}
-      </View>
-    )}
-  </View>
-);
+import Close from '../components/Close';
+import Feather from 'react-native-vector-icons/Feather';
 
 // Écran principal du profil
-interface ProfileScreenProps {
+interface SettingsScreenProps {
   activeScreen: string;
   setActiveScreen: (screen: string) => void;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = _props => {
+const SettingsScreen: React.FC<SettingsScreenProps> = _props => {
   const {connection} = useConnection();
   const {selectedAccount} = useAuthorization();
   const [balance, setBalance] = useState<number | null>(null);
@@ -136,7 +56,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = _props => {
   if (!selectedAccount) {
     return (
       <View style={styles.container}>
-        <AnimatedClouds />
+        <AnimatedCloudsLight />
         <View style={styles.connectContainer}>
           <Image
             source={require('../../assets/img/bechill-head1.png')}
@@ -167,9 +87,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = _props => {
   // Si l'utilisateur est connecté, afficher le profil
   return (
     <SafeAreaView style={styles.container}>
+      <AnimatedCloudsLight />
+      <Close
+        onClose={() => {
+          _props.setActiveScreen('chillspace');
+        }}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Header />
-        <Text style={styles.screenTitle}>Profile</Text>
+        <Text style={styles.screenTitle}>Settings</Text>
 
         {/* Ajout du composant AccountInfo */}
         <View style={styles.accountContainer}>
@@ -179,74 +104,132 @@ const ProfileScreen: React.FC<ProfileScreenProps> = _props => {
             fetchAndUpdateBalance={fetchAndUpdateBalance}
           />
         </View>
+        <View style={styles.fundButtonsContainer}>
+          <TouchableOpacity style={styles.receiveButton}>
+            <Text style={styles.receiveButtonText}>RECEIVE FUNDS</Text>
+          </TouchableOpacity>
 
-        <Text style={styles.profileType}>Moderate investor</Text>
-        <Text style={styles.profileDescription}>
-          You are a stable and goal-oriented investor who strives for a
-          harmonized investment strategy that balances risk and reward.
+          <TouchableOpacity style={styles.sendButton}>
+            <Text style={styles.sendButtonText}>SEND FUNDS</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.underline} />
+        <Text style={styles.trackedWalletTitle}>Tracked wallets</Text>
+        <View style={styles.walletCard}>
+          <Image
+            source={require('../../assets/img/walletlogo.png')}
+            style={styles.walletLogo}
+          />
+          <View style={styles.walletInfo}>
+            <Text style={styles.walletName}>Wallet1</Text>
+            <Text style={styles.walletAddress}>6rW...TtrD</Text>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.addWalletRow}>
+          <Text style={styles.addWalletText}>Add wallet</Text>
+          <Feather name="plus-square" size={28} color="#FFFFFF" />
+        </TouchableOpacity>
+
+        <Text style={styles.comingSoonText}>
+          Coming soon: Track multiple wallets in your portfolio.
         </Text>
-
-        <InfoCard
-          icon="😎"
-          title="Chill score"
-          progress={78}
-          color="#FFFF00"
-          value="78%"
-          showInfoButton={true}
-        />
-
-        <InfoCard
-          icon="⚠️"
-          title="Risk score"
-          progress={25}
-          color="#8A2BE2"
-          value="25%"
-          showInfoButton={true}
-        />
-
-        <InfoCard
-          icon="👆"
-          title="Bucket split"
-          progress={70}
-          color="#FFFF00"
-          value=""
-          additionalInfo={{
-            leftText: '30% speculative',
-            rightText: '70% steady',
-          }}
-          showInfoButton={true}
-        />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  addWalletRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 30,
+    marginBottom: 30,
+  },
+
+  addWalletText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+
+  addWalletIcon: {
+    fontSize: 28,
+    fontWeight: '300',
+    color: '#FFFFFF',
+  },
+
   container: {
     flex: 1,
-    backgroundColor: '#f0f0ff',
+    backgroundColor: '#3C0891',
   },
+
+  fundButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 30,
+    marginTop: -15,
+    marginBottom: 20,
+    gap: 15,
+  },
+
+  receiveButton: {
+    backgroundColor: '#560CCC',
+    borderRadius: 30,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  receiveButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 12,
+    letterSpacing: 1,
+  },
+
+  sendButton: {
+    backgroundColor: '#DDDAF6',
+    borderRadius: 30,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  sendButtonText: {
+    color: '#560CCC',
+    fontWeight: 'bold',
+    fontSize: 12,
+    letterSpacing: 1,
+  },
+
   scrollContainer: {
     flexGrow: 1,
     paddingBottom: 20,
   },
   screenTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#8A2BE2',
+    fontSize: 42,
+    fontFamily: Fonts.DMSerif,
+    color: Colors.secondary,
     paddingHorizontal: 15,
     paddingVertical: 10,
+    marginLeft: 15,
   },
-  profileType: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#8A2BE2',
+  trackedWalletTitle: {
+    fontSize: 28,
+    fontFamily: Fonts.DMSerif,
+    color: Colors.secondary,
     paddingHorizontal: 15,
-    paddingBottom: 10,
+    paddingVertical: 10,
+    marginLeft: 15,
   },
-  profileDescription: {
+  comingSoonText: {
+    width: '90%',
+    marginLeft: 15,
     fontSize: 16,
-    color: '#333',
+    color: '#94ADC7',
     paddingHorizontal: 15,
     paddingBottom: 20,
     lineHeight: 22,
@@ -370,20 +353,56 @@ const styles = StyleSheet.create({
   },
   // Style pour le conteneur d'AccountInfo
   accountContainer: {
-    width: '90%',
+    width: '95%',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
     borderRadius: 15,
     padding: 16,
     marginHorizontal: 15,
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+
     alignSelf: 'center',
+  },
+
+  underline: {
+    marginTop: 10,
+    height: 1,
+    backgroundColor: '#8C53E7',
+    width: '90%',
+    alignSelf: 'center',
+    borderRadius: 1,
+  },
+  walletCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    borderRadius: 20,
+    padding: 16,
+    marginHorizontal: 15,
+    marginBottom: 12,
+  },
+
+  walletLogo: {
+    width: 60,
+    height: 60,
+    borderRadius: 15,
+    marginRight: 15,
+  },
+
+  walletInfo: {
+    flexDirection: 'column',
+  },
+
+  walletName: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    marginBottom: 4,
+  },
+
+  walletAddress: {
+    fontSize: 16,
+    color: '#B8B8FF',
   },
 });
 
-export default ProfileScreen;
+export default SettingsScreen;

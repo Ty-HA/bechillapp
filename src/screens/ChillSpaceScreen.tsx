@@ -7,7 +7,6 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  ViewStyle,
 } from 'react-native';
 import Header from '../components/Header';
 import {GlobalStyles as GS} from '../constants/GlobalStyles';
@@ -18,6 +17,7 @@ import Feather from 'react-native-vector-icons/Feather';
 const background = require('../../assets/img/BeChill_landing_bg.png');
 
 const ChillSpaceScreen = () => {
+  const maxBarWidth = 120;
   return (
     <ImageBackground
       source={background}
@@ -52,7 +52,9 @@ const ChillSpaceScreen = () => {
             <View style={styles.cardRow}>
               <View>
                 <Text style={styles.cardLabel}>🎯 Your goal</Text>
-                <Text style={styles.cardContent}>steady growth, low risk</Text>
+                <Text style={styles.cardContentGoal}>
+                  steady growth, low risk
+                </Text>
               </View>
               <Feather
                 name="edit"
@@ -64,35 +66,54 @@ const ChillSpaceScreen = () => {
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardLabel}>📊 Portfolio</Text>
-            <Text style={styles.cardValue}>$4,832</Text>
-            <View style={styles.assetList}>
-              <View
-                style={[
-                  styles.assetBar,
-                  {backgroundColor: '#6F2CFF'} as ViewStyle,
-                ]}
-              />
-              <Text style={styles.assetItem}>SOL</Text>
-              <View
-                style={[
-                  styles.assetBar,
-                  {backgroundColor: '#B4D8F8'} as ViewStyle,
-                ]}
-              />
-              <Text style={styles.assetItem}>JTO</Text>
-              <View
-                style={[
-                  styles.assetBar,
-                  {backgroundColor: '#ADFF2F'} as ViewStyle,
-                ]}
-              />
-              <View
-                style={[
-                  styles.assetBar,
-                  {backgroundColor: '#ADFF2F'} as ViewStyle,
-                ]}
-              />
+            <View style={styles.portfolioRow}>
+              {/* Colonne gauche */}
+              <View style={styles.portfolioValueCol}>
+                <Text style={styles.cardLabel}>📊 Portfolio</Text>
+                <Text style={styles.cardValue}>$4,832</Text>
+                <Text style={styles.cardTotalValue}>Total value</Text>
+              </View>
+
+              {/* Colonne droite */}
+              <View style={styles.portfolioAssetsCol}>
+                <Text style={styles.cardLabel}>Top assets</Text>
+
+                <View style={styles.assetRow}>
+                  <Text style={styles.assetName}>ETH</Text>
+                  <View style={{width: maxBarWidth * 1.0}}>
+                    <View
+                      style={[
+                        styles.assetBarSmall,
+                        {backgroundColor: '#6F2CFF', width: '100%'},
+                      ]}
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.assetRow}>
+                  <Text style={styles.assetName}>SOL</Text>
+                  <View style={{width: maxBarWidth * 0.6}}>
+                    <View
+                      style={[
+                        styles.assetBarSmall,
+                        {backgroundColor: '#B4D8F8', width: '100%'},
+                      ]}
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.assetRow}>
+                  <Text style={styles.assetName}>JTO</Text>
+                  <View style={{width: maxBarWidth * 0.3}}>
+                    <View
+                      style={[
+                        styles.assetBarSmall,
+                        {backgroundColor: '#ADFF2F', width: '100%'},
+                      ]}
+                    />
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
 
@@ -121,6 +142,30 @@ const ChillSpaceScreen = () => {
 const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  valueBlock: {
+    marginBottom: 12,
+  },
+
+  assetRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: 6,
+  },
+
+  assetName: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    width: 40,
+  },
+
+  assetBarSmall: {
+    height: 10,
+
+    marginLeft: 6,
+  },
+
   background: {
     flex: 1,
     width: '100%',
@@ -131,13 +176,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  cardTotalValue: {
+    fontSize: 18,
+    color: '#888',
+    marginTop: 2,
+  },
   editIcon: {
     marginLeft: 12,
   },
 
   content: {
     padding: 20,
-    paddingBottom: 100,
+    paddingBottom: 120,
   },
   cloudSection: {
     alignItems: 'center',
@@ -204,25 +254,24 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardLabel: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#888',
     marginBottom: 6,
   },
-  cardContent: {
+  cardContentGoal: {
     color: '#333',
     fontSize: 18,
     fontWeight: '600',
+  },
+  cardContent: {
+    color: '#333',
+    fontSize: 16,
+    fontWeight: '400',
   },
   cardValue: {
     color: '#333',
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  assetList: {
-    color: '#333',
-    gap: 4,
-    marginTop: 4,
   },
   assetItem: {
     fontSize: 12,
@@ -244,6 +293,20 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: '#999',
     fontSize: 14,
+  },
+  portfolioRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    gap: 16,
+  },
+
+  portfolioValueCol: {
+    flex: 1,
+  },
+
+  portfolioAssetsCol: {
+    flex: 2,
   },
 });
 

@@ -9,7 +9,7 @@ import {AuthorizationProvider} from './src/components/providers/AuthorizationPro
 import AssetsScreen from './src/screens/AssetsScreen';
 import ObjectivesScreen from './src/screens/ObjectivesScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 import MainScreen from './src/screens/MainScreen';
 // import InfoScreen from './src/screens/InfoScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
@@ -23,6 +23,7 @@ const NavigationContent = () => {
   const [activeScreen, setActiveScreen] = useState('assets');
   const {selectedAccount} = useAuthorization();
   const isConnected = !!selectedAccount;
+  const hideBottomBarScreens = ['settings', 'onboarding'];
 
   // États pour gérer le flux de navigation
   const [currentView, setCurrentView] = useState<
@@ -64,10 +65,11 @@ const NavigationContent = () => {
     if (screen === 'wallet_story') {
       setCurrentView('walletStory');
     } else if (screen === 'main') {
-      setCurrentView('dashboard');
+      setCurrentView('dashboard'); // ← le dashboard "wrappe" les screens comme assets/settings/etc
+      setActiveScreen('settings');
     } else if (screen === 'assets') {
       // Ajouter ce cas pour la redirection après les stories
-      setCurrentView('dashboard');
+
       setActiveScreen('assets');
     }
   };
@@ -115,6 +117,9 @@ const NavigationContent = () => {
 
   const renderActiveScreen = () => {
     switch (activeScreen) {
+      case 'onboarding':
+        return <OnboardingScreen onNavigate={navigateOnboarding} />;
+
       case 'assets':
         return (
           <AssetsScreen
@@ -138,9 +143,9 @@ const NavigationContent = () => {
             setActiveScreen={setActiveScreen}
           />
         );
-      case 'profile':
+      case 'settings':
         return (
-          <ProfileScreen
+          <SettingsScreen
             activeScreen={activeScreen}
             setActiveScreen={setActiveScreen}
           />
@@ -159,7 +164,12 @@ const NavigationContent = () => {
   return (
     <View style={styles.navigationContainer}>
       <View style={styles.screenContainer}>{renderActiveScreen()}</View>
-      <BottomBar activeScreen={activeScreen} onScreenChange={setActiveScreen} />
+      {!hideBottomBarScreens.includes(activeScreen) && (
+        <BottomBar
+          activeScreen={activeScreen}
+          onScreenChange={setActiveScreen}
+        />
+      )}
     </View>
   );
 };
