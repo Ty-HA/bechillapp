@@ -40,7 +40,7 @@ const ChillSpaceScreen = () => {
             </View>
 
             <Text style={styles.status}>
-              your bag is mostly in sync — just a few tweaks away from smooth
+              Your bag is mostly in sync — just a few tweaks away from smooth
               sailing.
             </Text>
             <View style={styles.button}>
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     color: '#333',
-    fontSize: 14,
+    fontSize: 18,
   },
   button: {
     backgroundColor: Colors.primary,
