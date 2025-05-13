@@ -3,7 +3,7 @@
 import {StyleSheet, Platform} from 'react-native';
 
 export const Colors = {
-  primary: '#540CCC', // Violet chill principal
+  primary: '#560CCC', // Violet chill principal
   secondary: '#FFFF4F', // Jaune éclatant
   backgroundStart: '#A0C5E8', // Dégradé start
   backgroundEnd: '#FAEAB0', // Dégradé end
@@ -33,6 +33,13 @@ export const Fonts = {
 };
 
 export const GlobalStyles = StyleSheet.create({
+  buttonSecondaryText: {
+    fontFamily: Fonts.Monument,
+    fontSize: 18,
+    color: Colors.secondary,
+    fontWeight: 'bold',
+  },
+
   container: {
     flex: 1,
     padding: 16,

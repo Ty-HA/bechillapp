@@ -12,6 +12,7 @@ MERGED from [:solana-mobile_mobile-wallet-adapter-protocol] /Users/tyha/Projects
 MERGED from [:react-native-get-random-values] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-vector-icons] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-webview] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-21:12
 MERGED from [com.facebook.react:react-android:0.71.4] /Users/tyha/.gradle/caches/transforms-3/67fd1bdc8fedf69f49b3eac4ef773f60/transformed/jetified-react-android-0.71.4-debug/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/tyha/.gradle/caches/transforms-3/091aa78edfb1f2d80073a0612085f398/transformed/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -192,6 +193,8 @@ MERGED from [:react-native-safe-area-context] /Users/tyha/Projects/Mobile/react-
 MERGED from [:react-native-safe-area-context] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-vector-icons] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-vector-icons] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-webview] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-webview] /Users/tyha/Projects/Mobile/react-native/bechillapp/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [com.facebook.react:react-android:0.71.4] /Users/tyha/.gradle/caches/transforms-3/67fd1bdc8fedf69f49b3eac4ef773f60/transformed/jetified-react-android-0.71.4-debug/AndroidManifest.xml:5:5-7:41

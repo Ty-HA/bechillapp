@@ -11,11 +11,12 @@ import ObjectivesScreen from './src/screens/ObjectivesScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import MainScreen from './src/screens/MainScreen';
-import InfoScreen from './src/screens/InfoScreen';
+// import InfoScreen from './src/screens/InfoScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import WalletStoryScreen from './src/screens/WalletStoryScreen';
 import BottomBar from './src/components/BottomBar';
 import {useAuthorization} from './src/components/providers/AuthorizationProvider';
+import ChillSpaceScreen from './src/screens/ChillSpaceScreen';
 
 // Composant de navigation personnalisé qui utilise le context d'autorisation
 const NavigationContent = () => {
@@ -128,8 +129,8 @@ const NavigationContent = () => {
             setActiveScreen={setActiveScreen}
           />
         );
-      case 'chillbot':
-        return <InfoScreen />;
+      case 'chillspace':
+        return <ChillSpaceScreen />;
       case 'history':
         return (
           <HistoryScreen

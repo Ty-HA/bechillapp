@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
 import {Colors} from '../constants/GlobalStyles';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 /**
  * Barre de navigation complète pour l'app BeChill
@@ -19,57 +20,77 @@ const BottomBar: React.FC<BottomBarProps> = ({
 }) => {
   // Définir les onglets disponibles avec leurs icônes et leurs labels
   const tabs = [
+    /*
     {
       id: 'assets',
       iconPath: require('../../assets/img/assets.png'),
       label: 'Assets',
     },
+    */
     {
-      id: 'objectives',
-      iconPath: require('../../assets/img/objectives.png'),
-      label: 'Objectives',
+      id: 'chat',
+      iconName: 'sms',
+      activeIconName: 'sms',
+      label: 'Chat',
     },
     {
-      id: 'chillbot',
-      iconPath: require('../../assets/img/chillbot.png'),
-      label: 'Chillbot',
+      id: 'chillspace',
+      icon: require('../../assets/img/chillspace.png'),
+      activeIcon: null, // même icône active/inactive
+      label: 'ChillSpace',
     },
+    {
+      id: 'profile',
+      iconName: 'settings',
+      activeIconName: 'settings',
+      label: 'Settings',
+    },
+    /*
     {
       id: 'history',
       iconPath: require('../../assets/img/history.png'),
       label: 'History',
     },
-    {
-      id: 'profile',
-      iconPath: require('../../assets/img/profile.png'),
-      label: 'Profile',
-    },
+    */
   ];
 
   return (
     <View style={styles.container}>
-      {tabs.map(tab => (
-        <TouchableOpacity
-          key={tab.id}
-          style={styles.tabItem}
-          onPress={() => onScreenChange(tab.id)}>
-          <Image
-            source={tab.iconPath}
-            style={[
-              styles.tabIcon,
-              activeScreen === tab.id ? styles.activeIcon : styles.inactiveIcon,
-            ]}
-            resizeMode="contain"
-          />
-          <Text
-            style={[
-              styles.tabText,
-              activeScreen === tab.id ? styles.activeText : styles.inactiveText,
-            ]}>
-            {tab.label}
-          </Text>
-        </TouchableOpacity>
-      ))}
+      {tabs.map(tab => {
+        const isActive = activeScreen === tab.id;
+
+        return (
+          <TouchableOpacity
+            key={tab.id}
+            style={styles.tabItem}
+            onPress={() => onScreenChange(tab.id)}>
+            {tab.iconName ? (
+              <MaterialIcons
+                name={isActive ? tab.activeIconName : tab.iconName}
+                size={24}
+                color={isActive ? Colors.primary : '#bbbbbb'}
+              />
+            ) : (
+              <Image
+                source={tab.icon}
+                style={[
+                  styles.tabIcon,
+                  isActive ? styles.activeIcon : styles.inactiveIcon,
+                ]}
+                resizeMode="contain"
+              />
+            )}
+
+            <Text
+              style={[
+                styles.tabText,
+                isActive ? styles.activeText : styles.inactiveText,
+              ]}>
+              {tab.label}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };
