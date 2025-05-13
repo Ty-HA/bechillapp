@@ -12,6 +12,8 @@ import {
 import Header from '../components/Header';
 import {GlobalStyles as GS} from '../constants/GlobalStyles';
 import {Colors} from '../constants/GlobalStyles';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
 
 const background = require('../../assets/img/BeChill_landing_bg.png');
 
@@ -47,8 +49,18 @@ const ChillSpaceScreen = () => {
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardLabel}>🎯 Your goal</Text>
-            <Text style={styles.cardContent}>steady growth, low risk</Text>
+            <View style={styles.cardRow}>
+              <View>
+                <Text style={styles.cardLabel}>🎯 Your goal</Text>
+                <Text style={styles.cardContent}>steady growth, low risk</Text>
+              </View>
+              <Feather
+                name="edit"
+                size={24}
+                color="#888"
+                style={styles.editIcon}
+              />
+            </View>
           </View>
 
           <View style={styles.card}>
@@ -91,10 +103,14 @@ const ChillSpaceScreen = () => {
             </Text>
           </View>
 
-          <View style={[styles.card, styles.comingSoon]}>
+          <View style={[styles.card, styles.cardComingSoon]}>
             <Text style={styles.cardLabel}>🕐 Objective (coming soon)</Text>
-            <Text style={styles.cardContent}>Chill score › 80</Text>
-            <Text style={styles.cardContent}>Set up a DCA plan</Text>
+            <Text style={[styles.cardContent, styles.comingSoonText]}>
+              Chill score › 80
+            </Text>
+            <Text style={[styles.cardContent, styles.comingSoonText]}>
+              Set up a DCA plan
+            </Text>
           </View>
         </ScrollView>
       </View>
@@ -110,9 +126,18 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  cardRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  editIcon: {
+    marginLeft: 12,
+  },
+
   content: {
     padding: 20,
-    paddingBottom: 60,
+    paddingBottom: 100,
   },
   cloudSection: {
     alignItems: 'center',
@@ -167,10 +192,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 8,
   },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
+
   card: {
     backgroundColor: 'white',
     borderRadius: 16,
@@ -187,15 +209,18 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   cardContent: {
-    fontSize: 14,
+    color: '#333',
+    fontSize: 18,
     fontWeight: '600',
   },
   cardValue: {
+    color: '#333',
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   assetList: {
+    color: '#333',
     gap: 4,
     marginTop: 4,
   },
@@ -209,8 +234,16 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     width: '100%',
   },
-  comingSoon: {
-    backgroundColor: '#F5F5F5',
+  cardComingSoon: {
+    opacity: 0.8,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    borderColor: '#999',
+  },
+  comingSoonText: {
+    fontStyle: 'italic',
+    color: '#999',
+    fontSize: 14,
   },
 });
 

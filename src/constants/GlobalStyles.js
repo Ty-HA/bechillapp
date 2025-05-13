@@ -35,7 +35,7 @@ export const Fonts = {
 export const GlobalStyles = StyleSheet.create({
   buttonSecondaryText: {
     fontFamily: Fonts.Monument,
-    fontSize: 18,
+    fontSize: 14,
     color: Colors.secondary,
     fontWeight: 'bold',
   },

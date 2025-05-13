@@ -11,7 +11,7 @@ const Header = () => {
           source={require('../../assets/img/bechill-head2.png')}
           style={styles.logo}
         />
-        <Text style={styles.logoText}>beChill</Text>
+        <Text style={styles.logoText}>ChillSpace</Text>
       </View>
     </View>
   );
