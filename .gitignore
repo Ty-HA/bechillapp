@@ -34,6 +34,8 @@ android/build/
 local.properties
 .gradle/
 build/
+*.apk
+*.aab
 
 # 🍏 iOS
 ios/build/
@@ -46,6 +48,9 @@ DerivedData/
 *.mode1v3
 *.mode2v3
 *.perspectivev3
+*.ipa
+*.dSYM.zip
+*.dSYM
 
 # ⚠️ Secrets et fichiers d'env
 .env
@@ -62,6 +67,9 @@ DerivedData/
 # 🔍 Watchman
 .watchmanconfig
 
+# 📊 Metro Bundler
+.metro-health-check*
+
 # 📜 Logs
 logs/
 *.log
@@ -70,3 +78,7 @@ logs/
 /vendor/bundle
 
 **/vendor/
+
+**/build/
+**/android/app/build/
+/android/app/build
